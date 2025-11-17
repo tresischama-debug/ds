@@ -4,11 +4,6 @@ import { useRouter } from 'next/navigation'
 
 export default function MainHeadingSection() {
   const router = useRouter()
-
-  const handleSignUp = () => {
-    router.push('/checkout')
-  }
-
   return (
     <section id="main-heading" className="relative min-h-screen flex items-center justify-center bg-white">
       <div className="container mx-auto px-4 py-20">
@@ -40,19 +35,36 @@ export default function MainHeadingSection() {
           </div>
 
           {/* Right side - Content */}
-          <div className="text-center md:text-left space-y-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
-              Embrace Your Inner Strength
-            </h1>
-            <div>
-              <button
-                onClick={handleSignUp}
-                className="bg-blue-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition-all shadow-lg transform hover:scale-105 uppercase tracking-wide"
-              >
-                SIGN UP NOW
-              </button>
-            </div>
-          </div>
+          {/* Right side - Content */}
+<div className="text-center md:text-left space-y-8 max-w-3xl">
+  <h1 className="font-extrabold leading-tight max-w-3xl">
+  <span className="text-3xl md:text-4xl heading-font lg:text-5xl text-black block">
+    This isn’t about getting results and falling back,
+  </span>
+
+<span className="text-3xl md:text-4xl heading-font lg:text-5xl text-[#5A5A5A] block mt-2">
+    it’s about becoming the person who never does.
+  </span>
+</h1>
+
+
+
+  <p className="text-lg md:text-xl normal-font text-gray-600 leading-relaxed max-w-xl">
+    This isn’t just about working out.
+    This is about stepping into the strongest, most confident version of yourself. 
+    My 1:1 coaching program is built to help you lift heavy, sharpen your mindset, 
+    and build the kind of discipline that turns evolution into a lifestyle.
+    With customized training, tailored nutrition, and real support, you’ll develop 
+    the strength — both physically and mentally — to handle anything life throws at you.
+    Ready to lock in and become who you were truly meant to be?
+  </p>
+
+  <div>
+   
+
+  </div>
+</div>
+
         </div>
       </div>
     </section>
