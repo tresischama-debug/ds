@@ -80,17 +80,15 @@ export default function HeroSection() {
 >
   SIGN UP NOW
   <svg
-    className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+    xmlns="http://www.w3.org/2000/svg"
     fill="none"
-    stroke="currentColor"
     viewBox="0 0 24 24"
+    strokeWidth="2.2"
+    stroke="black"
+    className="w-6 h-6 transition-all group-hover:stroke-white"
   >
-    <path 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      strokeWidth={2} 
-      d="M13 7l5 5m0 0l-5 5m5-5H6" 
-    />
+    <circle cx="12" cy="12" r="9"></circle>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M10 8l4 4-4 4" />
   </svg>
 </button>
 
