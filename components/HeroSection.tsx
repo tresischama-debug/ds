@@ -1,9 +1,17 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 export default function HeroSection() {
+  const router = useRouter()
+
   const handleSignUp = () => {
     const element = document.getElementById('questionnaire')
     if (element) element.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleWaitlistClick = () => {
+    router.push('/waitlist')
   }
 
   return (
@@ -19,6 +27,23 @@ export default function HeroSection() {
 
       {/* Optional Overlay for text readability */}
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+
+      {/* Exclusive Offer Banner - Top Center */}
+      <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-4xl px-4">
+        <div className="bg-gradient-to-r from-[#FF5A8A] to-[#FF3D7F] text-white rounded-2xl shadow-2xl p-6 text-center cursor-pointer transform hover:scale-105 transition-all" onClick={handleWaitlistClick}>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <span className="text-3xl">🔥</span>
+            <h3 className="text-2xl md:text-3xl font-bold heading-font">EXCLUSIVE SPECIAL OFFER</h3>
+            <span className="text-3xl">🔥</span>
+          </div>
+          <p className="text-lg md:text-xl font-semibold mb-3 normal-font">
+            Limited to 33 People Only!
+          </p>
+          <button className="bg-white text-[#FF5A8A] px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition-all shadow-lg">
+            JOIN THE WAITLIST NOW →
+          </button>
+        </div>
+      </div>
 
       {/* Logo - Top Left */}
       <div className="absolute top-8 left-8 z-20">
