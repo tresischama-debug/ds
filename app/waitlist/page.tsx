@@ -474,9 +474,10 @@ export default function WaitlistPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-4 heading-font">You're on the waitlist!</h1>
             <p className="text-lg text-gray-600 mb-6 normal-font">
               Congratulations! You've secured your spot in this exclusive special offer.
-              {spotsLeft !== null && spotsLeft > 0 && (
+              {spotsLeft !== null && (
                 <span className="block mt-2 font-semibold text-[#5A5A5A]">
-                  Only {spotsLeft} spot{spotsLeft !== 1 ? 's' : ''} remaining!
+                  {33 - spotsLeft} {33 - spotsLeft !== 1 ? 'people' : 'person'} on the waitlist
+                  {spotsLeft > 0 && ` • Only ${spotsLeft} spot${spotsLeft !== 1 ? 's' : ''} remaining!`}
                 </span>
               )}
             </p>
