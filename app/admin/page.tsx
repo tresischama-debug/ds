@@ -205,6 +205,22 @@ export default function AdminPage() {
           </button>
         </div>
 
+        {/* Stats Banner */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="text-sm font-medium text-gray-500">Total Spots</div>
+            <div className="mt-2 text-3xl font-bold text-gray-900">33</div>
+          </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="text-sm font-medium text-gray-500">Filled</div>
+            <div className="mt-2 text-3xl font-bold text-green-600">{waitlistEntries.length}</div>
+          </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="text-sm font-medium text-gray-500">Available</div>
+            <div className="mt-2 text-3xl font-bold text-blue-600">{33 - waitlistEntries.length}</div>
+          </div>
+        </div>
+
         {/* Tabs */}
         <div className="mb-6 border-b border-gray-200">
           <nav className="-mb-px flex space-x-8">

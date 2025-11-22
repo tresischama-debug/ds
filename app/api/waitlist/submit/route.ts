@@ -1,58 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-
-const WAITLIST_FILE = path.join(process.cwd(), 'waitlist-submissions.json')
-const MAX_WAITLIST_SIZE = 33
-
-interface WaitlistEntry {
-  id: string
-  timestamp: string
-  goal: string | string[]
-  age: string
-  guardian: string
-  gender: string
-  challenges: string
-  seriousness: string
-  commitment: string
-  experience: string
-  name: string
-  firstName: string
-  lastName: string
-  work: string
-  phone: string
-  email: string
-  instagram: string
-}
-
-// Initialize waitlist file if it doesn't exist
-function initializeWaitlistFile() {
-  if (!fs.existsSync(WAITLIST_FILE)) {
-    fs.writeFileSync(WAITLIST_FILE, JSON.stringify([]), 'utf-8')
-  }
-}
-
-// Read waitlist entries
-function readWaitlistEntries(): WaitlistEntry[] {
-  initializeWaitlistFile()
-  const data = fs.readFileSync(WAITLIST_FILE, 'utf-8')
-  return JSON.parse(data)
-}
-
-// Write waitlist entries
-function writeWaitlistEntries(entries: WaitlistEntry[]) {
-  fs.writeFileSync(WAITLIST_FILE, JSON.stringify(entries, null, 2), 'utf-8')
-}
+import {
+  addWaitlistEntry,
+  getSpotsLeft,
+  getWaitlistCount,
+  isWaitlistFull,
+  MAX_WAITLIST_SIZE,
+  type WaitlistEntry
+} from '@/lib/waitlist-storage'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    // Read current waitlist
-    const waitlist = readWaitlistEntries()
-
     // Check if waitlist is full
-    if (waitlist.length >= MAX_WAITLIST_SIZE) {
+    if (isWaitlistFull()) {
       return NextResponse.json(
         { error: 'Waitlist is full', message: 'All 33 spots have been filled.' },
         { status: 400 }
@@ -81,18 +42,25 @@ export async function POST(request: NextRequest) {
     }
 
     // Add to waitlist
-    waitlist.push(newEntry)
-    writeWaitlistEntries(waitlist)
+    const success = addWaitlistEntry(newEntry)
+
+    if (!success) {
+      return NextResponse.json(
+        { error: 'Waitlist is full', message: 'All 33 spots have been filled.' },
+        { status: 400 }
+      )
+    }
 
     // Calculate spots left
-    const spotsLeft = MAX_WAITLIST_SIZE - waitlist.length
+    const spotsLeft = getSpotsLeft()
+    const position = getWaitlistCount()
 
     return NextResponse.json(
       {
         success: true,
         message: 'Successfully added to waitlist',
         spotsLeft,
-        position: waitlist.length,
+        position,
       },
       { status: 200 }
     )
