@@ -1,6 +1,6 @@
-// Simple in-memory storage for waitlist submissions
-// Note: This will reset when the serverless function cold starts
-// For production, use Vercel KV, Postgres, or another persistent database
+// Persistent JSON file storage for waitlist submissions
+import fs from 'fs'
+import path from 'path'
 
 export interface WaitlistEntry {
   id: string
@@ -22,31 +22,51 @@ export interface WaitlistEntry {
   instagram: string
 }
 
-// In-memory storage (temporary solution)
-let waitlistEntries: WaitlistEntry[] = []
+const DATA_FILE = path.join(process.cwd(), 'waitlist-entries.json')
 
 export const MAX_WAITLIST_SIZE = 33
 
+// Ensure the data file exists
+function ensureDataFile() {
+  if (!fs.existsSync(DATA_FILE)) {
+    fs.writeFileSync(DATA_FILE, JSON.stringify([]), 'utf-8')
+  }
+}
+
+// Read entries from file
+function readEntries(): WaitlistEntry[] {
+  ensureDataFile()
+  const data = fs.readFileSync(DATA_FILE, 'utf-8')
+  return JSON.parse(data)
+}
+
+// Write entries to file
+function writeEntries(entries: WaitlistEntry[]) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(entries, null, 2), 'utf-8')
+}
+
 export function getWaitlistEntries(): WaitlistEntry[] {
-  return [...waitlistEntries]
+  return readEntries()
 }
 
 export function addWaitlistEntry(entry: WaitlistEntry): boolean {
-  if (waitlistEntries.length >= MAX_WAITLIST_SIZE) {
+  const entries = readEntries()
+  if (entries.length >= MAX_WAITLIST_SIZE) {
     return false
   }
-  waitlistEntries.push(entry)
+  entries.push(entry)
+  writeEntries(entries)
   return true
 }
 
 export function getWaitlistCount(): number {
-  return waitlistEntries.length
+  return readEntries().length
 }
 
 export function getSpotsLeft(): number {
-  return Math.max(0, MAX_WAITLIST_SIZE - waitlistEntries.length)
+  return Math.max(0, MAX_WAITLIST_SIZE - readEntries().length)
 }
 
 export function isWaitlistFull(): boolean {
-  return waitlistEntries.length >= MAX_WAITLIST_SIZE
+  return readEntries().length >= MAX_WAITLIST_SIZE
 }
