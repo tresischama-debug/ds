@@ -28,6 +28,7 @@ export default function HeroSection() {
               src="/logo.png"
               alt="AW Logo"
               className="w-16 h-16 md:w-20 md:h-20 object-contain"
+              style={{ mixBlendMode: 'screen' }}
               onError={(e) => {
                 e.currentTarget.style.display = 'none'
                 const placeholder = e.currentTarget.nextElementSibling as HTMLElement
@@ -74,21 +75,22 @@ export default function HeroSection() {
 
        <button
   onClick={handleSignUp}
-  className="bg-white border border-black text-black px-10 py-4 rounded-full font-bold text-lg 
-             hover:bg-black hover:text-white transition-all shadow-xl 
-             transform hover:scale-105 flex items-center gap-2 group"
+  className="bg-[#c4ff0d] text-black px-8 py-4 rounded-full font-bold text-lg
+             hover:bg-[#b0e600] transition-all shadow-2xl
+             transform hover:scale-105 flex items-center gap-3 border-2 border-black"
+  style={{ letterSpacing: '0.05em' }}
 >
   SIGN UP NOW
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth="2.2"
-    stroke="black"
-    className="w-6 h-6 transition-all group-hover:stroke-white"
+    strokeWidth="2.5"
+    stroke="currentColor"
+    className="w-6 h-6"
   >
-    <circle cx="12" cy="12" r="9"></circle>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M10 8l4 4-4 4" />
+    <circle cx="12" cy="12" r="9" strokeWidth="2.5"></circle>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M10 8l4 4-4 4" strokeWidth="2.5" />
   </svg>
 </button>
 
